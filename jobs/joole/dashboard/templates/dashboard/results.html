@@ -1,0 +1,52 @@
+{% extends 'dashboard/results_base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/results.css' %}" media="all"/>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Mon tableau de bord énergie</h1>
+    </div>
+</div>
+
+{% if dysfunction_detected == True %}
+    <h3 class="text-danger"> Un dysfonctionnement a été detecter veuillez nous contacter dans les plus bref delais</h3>
+{% endif %}
+
+<h1>dépenses annuelle</h1>
+<table class="table">
+    {% for month in months %}
+        <th>{{month}}</th>
+    {% endfor %}
+    <tr>
+    {% for conso_euro2017s in conso_euro2017 %}
+        <td>{{conso_euro2017s | floatformat:2}}€ </br></td>
+    {% endfor %}
+    </tr>
+</table>
+
+
+<h1>consommation éléctrique</h1>
+<table class="table">
+    {% for month in months %}
+        <th>{{month}}</br></th>
+    {% endfor %}
+    <tr>
+    {% for conso_watt2017s in conso_watt2017 %}
+        <td>{{conso_watt2017s | floatformat:2}}</br></td>
+    {% endfor %}
+    </tr>
+</table>
+
+{% if is_elec_heating == True %}
+    <h3 class="text-primary">Nous avons détecter que vous utiliser un chauffage éléctrique</h3>
+{% endif %}
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'dashboard/js/results.js' %}"></script>
+{% endblock %}
